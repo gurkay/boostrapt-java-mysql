@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header_fragment :: page_head('Home - Backend Page', 'none')}" ></head>
+
+
+<body>
+
+    <div class="container-fluid">
+        <div th:replace="~{fragments/navigation_fragment :: menu}"></div>
+        <div>
+            <h2>Control Panel</h2>
+
+        </div>
+    </div>
+   
+    <div th:replace="~{fragments/footer_fragment :: footer}"></div>
+
+</body>
+
+</html>
