@@ -9,9 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shopme.admin.paging.PagingAndSortingHelper;
-import com.shopme.common.entity.Role;
-import com.shopme.common.entity.User;
+import com.abonedevre.backend.entity.Role;
+import com.abonedevre.backend.entity.User;
+import com.abonedevre.backend.exception.UserNotFoundException;
+import com.abonedevre.backend.paging.PagingAndSortingHelper;
+import com.abonedevre.backend.repository.role.RoleRepository;
+import com.abonedevre.backend.repository.user.UserRepository;
+import com.abonedevre.backend.repository.user.UserRepositoryCrud;
 
 @Service
 @Transactional
@@ -21,6 +25,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRepositoryCrud userRepositoryCrud;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -50,7 +57,9 @@ public class UserService {
         boolean isUpdatingUser = (user.getId() != null);
 
         if (isUpdatingUser) {
-            User existingUser = userRepository.findById(user.getId()).get();
+
+            // User existingUser = userRepository.findById(user.getId()).get();
+            User existingUser = userRepositoryCrud.findById(user.getId()).get();
 
             if (user.getPassword().isEmpty()) {
                 user.setPassword(existingUser.getPassword());
@@ -61,11 +70,11 @@ public class UserService {
             encodePassword(user);
         }
 
-        return userRepository.save(user);
+        return userRepositoryCrud.save(user);
     }
 
     public User updateAccount(User userInForm){
-        User user = userRepository.findById(userInForm.getId()).get();
+        User user = userRepositoryCrud.findById(userInForm.getId()).get();
 
         if(!userInForm.getPassword().isEmpty()){
             user.setPassword(userInForm.getPassword());
@@ -79,7 +88,7 @@ public class UserService {
         user.setFirstName(userInForm.getFirstName());
         user.setLastName(userInForm.getLastName());
         
-        return userRepository.save(user);
+        return userRepositoryCrud.save(user);
     }
 
     private void encodePassword(User user) {
@@ -111,7 +120,7 @@ public class UserService {
 
     public User getUserId(Integer id) throws UserNotFoundException {
         try {
-            return userRepository.findById(id).get();
+            return userRepositoryCrud.findById(id).get();
         } catch (NoSuchElementException exception) {
             throw new UserNotFoundException("Could not find any user with ID " + id);
         }
@@ -123,7 +132,7 @@ public class UserService {
             throw new UserNotFoundException("Could not find any user with ID " + id);
         }
 
-        userRepository.deleteById(id);
+        userRepositoryCrud.deleteById(id);
     }
 
     public void updateUserEnabledStatus(Integer id, boolean enabled){
