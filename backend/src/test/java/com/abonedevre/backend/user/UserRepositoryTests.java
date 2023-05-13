@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import com.abonedevre.backend.entity.Role;
@@ -20,9 +19,6 @@ import com.abonedevre.backend.repository.user.UserRepositoryCrud;
 public class UserRepositoryTests {
     @Autowired
     private UserRepositoryCrud userRepositoryCrud;
-
-    @Autowired
-    private TestEntityManager testEntityManager;
 
     @Test
     public void testCreateNewUserWithRole() {
