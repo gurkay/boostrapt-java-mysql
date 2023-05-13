@@ -11,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "users")
@@ -33,9 +34,9 @@ public class User extends IdBasedEntity {
 
     private boolean enabled;
 
-    // @ManyToMany(fetch = FetchType.EAGER)
-    // @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    // private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
 
@@ -96,23 +97,35 @@ public class User extends IdBasedEntity {
         this.enabled = enabled;
     }
 
-    // public Set<Role> getRoles() {
-    //     return roles;
-    // }
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-    // public void setRoles(Set<Role> roles) {
-    //     this.roles = roles;
-    // }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
-    // public void addRole(Role role) {
-    //     this.roles.add(role);
-    // }
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
 
-    // @Override
-    // public String toString() {
-    //     return "User [id=" + this.id + ", email=" + this.email + ", firstName=" + this.firstName + ", roles="
-    //             + this.roles + "]";
-    // }
+    public boolean hasRole(String roleName){
+        Iterator<Role> iterator = roles.iterator();
+        while(iterator.hasNext()){
+            Role role = iterator.next();
+            if(role.getName().equals(roleName)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + this.id + ", email=" + this.email + ", firstName=" + this.firstName + ", roles="
+                + this.roles + "]";
+    }
 
     @Transient
     public String getFullName() {
@@ -120,15 +133,5 @@ public class User extends IdBasedEntity {
         return this.firstName + " " + this.lastName;
     }
     
-    // public boolean hasRole(String roleName){
-    //     Iterator<Role> iterator = roles.iterator();
-    //     while(iterator.hasNext()){
-    //         Role role = iterator.next();
-    //         if(role.getName().equals(roleName)){
-    //             return true;
-    //         }
-    //     }
-        
-    //     return false;
-    // }
+
 }
