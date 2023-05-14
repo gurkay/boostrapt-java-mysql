@@ -109,6 +109,27 @@ public class User extends IdBasedEntity {
         this.roles.add(role);
     }
 
+    @Override
+    public String toString() {
+        return "User [id=" + this.id + ", email=" + this.email + ", firstName=" + this.firstName + ", roles="
+                + this.roles + "]";
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (id == null || photos == null) {
+            return "/images/defaultuser.png";
+        }
+        return "/user-photos/" + this.id + "/" + this.photos;
+    }
+    
+
+    @Transient
+    public String getFullName() {
+
+        return this.firstName + " " + this.lastName;
+    }
+    
     public boolean hasRole(String roleName){
         Iterator<Role> iterator = roles.iterator();
         while(iterator.hasNext()){
@@ -120,18 +141,4 @@ public class User extends IdBasedEntity {
         
         return false;
     }
-
-    @Override
-    public String toString() {
-        return "User [id=" + this.id + ", email=" + this.email + ", firstName=" + this.firstName + ", roles="
-                + this.roles + "]";
-    }
-
-    @Transient
-    public String getFullName() {
-
-        return this.firstName + " " + this.lastName;
-    }
-    
-
 }
