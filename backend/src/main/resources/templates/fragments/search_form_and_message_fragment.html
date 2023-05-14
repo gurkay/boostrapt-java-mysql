@@ -1,0 +1,26 @@
+<div th:fragment="search_form_and_message()">
+    <form th:action="@{${moduleURL} + '/page/1'}" class="form-inline m-3">
+        <input type="hidden" name="sortField" th:value="${sortField}" />
+        <input type="hidden" name="sortDir" th:value="${sortDir}" />
+        <div class="row">
+            <div class="col-auto">
+                Filter:
+            </div>
+            <div class="col-md-4">
+                <input type="search" name="keyword" th:value="${keyword}" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div th:if="${message != null}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+</div>

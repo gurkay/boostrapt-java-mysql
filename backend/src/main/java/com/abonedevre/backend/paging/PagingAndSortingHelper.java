@@ -22,6 +22,14 @@ public class PagingAndSortingHelper {
         this.sortField = sortField;
         this.sortDir = sortDir;
         this.keyword = keyword;
+        System.out.println();
+		System.out.println("\n###################################################");
+		System.out.println("# class: PagingAndSortingHelper ::: method: construct");
+        System.out.println("# listName : " + listName);
+        System.out.println("# sortField : " + sortField);
+        System.out.println("# sortDir : " + sortDir);
+        System.out.println("# keyword : " + keyword);
+		System.out.println("###################################################\n");
     }
 
     public void updateModelAttributes(int pageNum, Page<?> page) {

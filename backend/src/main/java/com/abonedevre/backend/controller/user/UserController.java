@@ -35,13 +35,23 @@ public class UserController {
 
     @GetMapping("/users")
     public String listFirstPage() {
-
+        System.out.println();
+		System.out.println("\n###################################################");
+		System.out.println("# class: UserController ::: method: listFirstPage");
+		System.out.println("# GetMapping('/users') ");
+		System.out.println("###################################################\n");
         return "redirect:/users/page/1?sortField=firstName&sortDir=asc";
     }
 
     @GetMapping("/users/page/{pageNum}")
     public String listByPage(@PagingAndSortingParam(listName = "listUsers", moduleURL = "/users") PagingAndSortingHelper helper, @PathVariable(name = "pageNum") Integer pageNum) {
-
+        System.out.println();
+		System.out.println("\n###################################################");
+		System.out.println("# class: UserController ::: method: listByPage");
+		System.out.println("# GetMapping('/users/page/{pageNum}') ");
+        System.out.println("# pageNum : " + pageNum);
+        System.out.println("# helper : " + helper.toString());
+		System.out.println("###################################################\n");
         userService.listByPage(pageNum, helper);
 
         return "users/users";

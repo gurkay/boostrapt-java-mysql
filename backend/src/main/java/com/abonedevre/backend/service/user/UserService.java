@@ -45,6 +45,12 @@ public class UserService {
     }
 
     public void listByPage(Integer pageNum, PagingAndSortingHelper helper){
+        System.out.println();
+		System.out.println("\n###################################################");
+		System.out.println("# class: UserService ::: method: listByPage");
+        System.out.println("# pageNum : " + pageNum);
+        System.out.println("# helper : " + helper.toString());
+		System.out.println("###################################################\n");
         helper.listEntities(pageNum, USER_PER_PAGE, userRepository);
     }
 
