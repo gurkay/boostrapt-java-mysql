@@ -7,7 +7,7 @@
     <div class="container-fluid">
 
         <div th:replace="~{fragments/navigation_fragment :: menu}"></div>
-        
+
         <div>
             <h2>Kullanıcı Yönetimi | [[${pageTitle}]]</h2>
         </div>
@@ -92,6 +92,8 @@
     <div th:replace="modal_fragments :: modal_dialog_check"></div>
     <div th:replace="fragments :: footer"></div>
 
+    <script th:src="@{/js/common_form.js}"></script>
+    <script th:src="@{/js/modal_dialog.js}"></script>
     <script type="text/javascript">
         MAX_FILE_SIZE = 102400; // 100Kb
         moduleURL = "[[@{/users}]]";
