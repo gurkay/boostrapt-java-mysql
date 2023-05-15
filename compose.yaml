@@ -1,0 +1,59 @@
+services:
+  backend:
+    container_name: backend
+    build: backend
+    ports:
+      - 8280:8080
+    restart: always
+    secrets:
+      - db-password
+    environment:
+      MYSQL_HOST: db
+    networks:
+      - boostrapt-spring
+      - spring-mysql
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    container_name: mysql_latest
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=db_abndvr
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    ports:
+      - 3308:3306
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - spring-mysql
+  frontend:
+    container_name: frontend
+    build: frontend
+    restart: always
+    secrets:
+      - db-password
+    environment:
+      MYSQL_HOST: db
+    networks:
+      - boostrapt-spring
+    depends_on:
+      - backend
+    ports:
+      - 82:80
+volumes:
+  db-data: {}
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  boostrapt-spring: {}
+  spring-mysql: {}
