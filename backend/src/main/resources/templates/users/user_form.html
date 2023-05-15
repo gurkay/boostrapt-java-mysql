@@ -89,8 +89,9 @@
         </form>
 
     </div>
-    <div th:replace="modal_fragments :: modal_dialog_check"></div>
-    <div th:replace="fragments :: footer"></div>
+
+    <div th:replace="~{fragments/modal_fragment :: modal_dialog}"></div>
+    <div th:replace="~{fragments/footer_fragment :: footer}"></div>
 
     <script th:src="@{/js/common_form.js}"></script>
     <script th:src="@{/js/modal_dialog.js}"></script>
@@ -123,7 +124,6 @@
 
 
     </script>
-    <script th:src="@{/js/common_form.js}"></script>
 </body>
 
 </html>
